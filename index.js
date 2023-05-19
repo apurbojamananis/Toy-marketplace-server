@@ -29,6 +29,14 @@ async function run() {
 
     const toysCollection = client.db("toyShop").collection("toys");
 
+    // get data from mongodb
+
+    app.get("/alltoys", async (req, res) => {
+      const result = await toysCollection.find().toArray();
+      res.send(result);
+    });
+
+    // post data to mongodb
     app.post("/allToys", async (req, res) => {
       const toys = req.body;
       console.log(toys);
