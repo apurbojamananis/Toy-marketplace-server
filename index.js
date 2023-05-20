@@ -1,6 +1,6 @@
 const express = require("express");
 const cors = require("cors");
-const { MongoClient, ServerApiVersion } = require("mongodb");
+const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 require("dotenv").config();
 const app = express();
 const port = process.env.PORT || 5000;
@@ -29,20 +29,30 @@ async function run() {
 
     const toysCollection = client.db("toyShop").collection("toys");
 
-    // get data from mongodb
+    // get all data from mongodb
 
     app.get("/alltoys", async (req, res) => {
       const result = await toysCollection.find().toArray();
       res.send(result);
     });
 
+    // get data by sub category
     app.get("/shopByCategory/:subcategory", async (req, res) => {
       const subcategory = req.params.subcategory;
 
       const query = { subCategory: subcategory };
       const options = {};
       const result = await toysCollection.find(query, options).toArray();
-      console.log(result);
+      res.send(result);
+    });
+
+    // get data by id
+
+    app.get("/toys/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const option = {};
+      const result = await toysCollection.findOne(query, option);
       res.send(result);
     });
 
