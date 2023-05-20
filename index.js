@@ -36,6 +36,16 @@ async function run() {
       res.send(result);
     });
 
+    app.get("/shopByCategory/:subcategory", async (req, res) => {
+      const subcategory = req.params.subcategory;
+
+      const query = { subCategory: subcategory };
+      const options = {};
+      const result = await toysCollection.find(query, options).toArray();
+      console.log(result);
+      res.send(result);
+    });
+
     // post data to mongodb
     app.post("/allToys", async (req, res) => {
       const toys = req.body;
