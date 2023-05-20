@@ -48,11 +48,21 @@ async function run() {
 
     // get data by id
 
-    app.get("/toys/:id", async (req, res) => {
+    app.get("/toy/:id", async (req, res) => {
       const id = req.params.id;
       const query = { _id: new ObjectId(id) };
-      const option = {};
-      const result = await toysCollection.findOne(query, option);
+      const options = {};
+      const result = await toysCollection.findOne(query, options);
+      res.send(result);
+    });
+
+    // get data by user
+    app.get("/user/:email", async (req, res) => {
+      const email = req.params.email;
+      const query = { email: email };
+      const options = {};
+      const result = await toysCollection.find(query, options).toArray();
+      console.log(result);
       res.send(result);
     });
 
