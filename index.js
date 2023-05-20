@@ -25,14 +25,15 @@ const client = new MongoClient(uri, {
 async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
-    await client.connect();
+    // await client.connect();
 
     const toysCollection = client.db("toyShop").collection("toys");
 
     // get all data from mongodb
 
     app.get("/alltoys", async (req, res) => {
-      const result = await toysCollection.find().toArray();
+      const limit = parseInt(req.query.limit) || 20;
+      const result = await toysCollection.find().limit(limit).toArray();
       res.send(result);
     });
 
