@@ -69,6 +69,32 @@ async function run() {
       res.send(result);
     });
 
+    // get data by user and ascending
+    app.get("/ascending/:email", async (req, res) => {
+      const email = req.params.email;
+      const query = { email: email };
+      const options = {};
+      const sort = { price: 1 };
+      const result = await toysCollection
+        .find(query, options)
+        .sort(sort)
+        .toArray();
+      res.send(result);
+    });
+
+    // get data by user and ascending
+    app.get("/descending/:email", async (req, res) => {
+      const email = req.params.email;
+      const query = { email: email };
+      const options = {};
+      const sort = { price: -1 };
+      const result = await toysCollection
+        .find(query, options)
+        .sort(sort)
+        .toArray();
+      res.send(result);
+    });
+
     // post data to mongodb
     app.post("/allToys", async (req, res) => {
       const toys = req.body;
