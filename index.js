@@ -75,6 +75,30 @@ async function run() {
       res.send(result);
     });
 
+    // update data to mongodb
+    app.put("/updateToy/:id", async (req, res) => {
+      const id = req.params.id;
+      const filter = { _id: new ObjectId(id) };
+      const options = { upsert: true };
+      const updatedToy = req.body;
+      console.log(updatedToy);
+      const toy = {
+        $set: {
+          ToyName: updatedToy.ToyName,
+          photoURL: updatedToy.photoURL,
+          subCategory: updatedToy.subCategory,
+          price: updatedToy.price,
+          rating: updatedToy.rating,
+          quantity: updatedToy.quantity,
+          description: updatedToy.description,
+        },
+      };
+
+      const result = await toysCollection.updateOne(filter, toy, options);
+
+      res.send(result);
+    });
+
     // Send a ping to confirm a successful connection
     await client.db("toyShop").command({ ping: 1 });
     console.log(
