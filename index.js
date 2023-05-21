@@ -29,6 +29,7 @@ async function run() {
 
     const toysCollection = client.db("toyShop").collection("toys");
     const blogsCollection = client.db("toyShop").collection("blogs");
+    const galleryCollection = client.db("toyShop").collection("gallery");
 
     // get all data from mongodb
 
@@ -110,6 +111,11 @@ async function run() {
     // blogs get
     app.get("/blogs", async (req, res) => {
       const result = await blogsCollection.find().toArray();
+      res.send(result);
+    });
+
+    app.get("/gallery", async (req, res) => {
+      const result = await galleryCollection.find().toArray();
       res.send(result);
     });
 
