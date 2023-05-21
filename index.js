@@ -65,7 +65,7 @@ async function run() {
       const query = { email: email };
       const options = {};
       const result = await toysCollection.find(query, options).toArray();
-      console.log(result);
+
       res.send(result);
     });
 
@@ -98,7 +98,7 @@ async function run() {
     // post data to mongodb
     app.post("/allToys", async (req, res) => {
       const toys = req.body;
-      console.log(toys);
+
       const result = await toysCollection.insertOne(toys);
       res.send(result);
     });
@@ -109,7 +109,7 @@ async function run() {
       const filter = { _id: new ObjectId(id) };
       const options = { upsert: true };
       const updatedToy = req.body;
-      console.log(updatedToy);
+
       const toy = {
         $set: {
           ToyName: updatedToy.ToyName,
